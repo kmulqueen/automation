@@ -85,6 +85,7 @@ const Form = ({ addUser }) => {
             id="standard-number"
             label="Age"
             type="number"
+            onChange={onChange}
             InputLabelProps={{
               shrink: true
             }}
