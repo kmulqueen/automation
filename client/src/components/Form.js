@@ -26,12 +26,14 @@ const Form = ({ addUser }) => {
     phone: "",
     age: Number
   });
+
+  // Style
   const classes = useStyles();
 
+  // Event Handlers
   const onChange = e => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-
   const onSubmit = e => {
     e.preventDefault();
     addUser(input);
@@ -49,16 +51,16 @@ const Form = ({ addUser }) => {
           <TextField
             required
             id="standard-required"
-            label="Required"
-            defaultValue="First Name"
+            label="First Name"
+            defaultValue=""
             onChange={onChange}
             name="firstName"
           />
           <TextField
             required
             id="standard-required"
-            label="Required"
-            defaultValue="Last Name"
+            label="Last Name"
+            defaultValue=""
             onChange={onChange}
             name="required"
             name="lastName"
@@ -66,18 +68,19 @@ const Form = ({ addUser }) => {
           <TextField
             required
             id="standard-required"
-            label="Required"
-            defaultValue="Email Address"
+            label="Email"
+            defaultValue=""
             onChange={onChange}
             name="required"
             name="email"
           />
           <TextField
             required
-            id="standard-required"
-            label="Required"
-            defaultValue="(123)456-7890"
+            id="standard-helperText"
+            label="Phone Number"
+            defaultValue=""
             onChange={onChange}
+            helperText="(123)456-7890"
             name="required"
             name="phone"
           />
