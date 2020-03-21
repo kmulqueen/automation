@@ -11,16 +11,16 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650
+  }
+});
+
 const SimpleTable = ({ getAllPosts, post: { posts } }) => {
   useEffect(() => {
     getAllPosts();
   }, [getAllPosts]);
-
-  const useStyles = makeStyles({
-    table: {
-      minWidth: 650
-    }
-  });
 
   const classes = useStyles();
 

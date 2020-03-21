@@ -67,6 +67,7 @@ export const searchTags = tags => async dispatch => {
           }
         }
       }
+      return null;
     });
 
     dispatch({
