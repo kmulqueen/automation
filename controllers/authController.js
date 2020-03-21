@@ -1,7 +1,7 @@
 const db = require("../models");
 const bcrpyt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("config");
+require("dotenv").config();
 
 module.exports = {
   test: function(req, res) {
@@ -29,7 +29,7 @@ module.exports = {
 
       jwt.sign(
         payload,
-        config.get("jwtSecret"),
+        process.env.JWTSECRET,
         { expiresIn: 7200 },
         (err, token) => {
           if (err) throw err;
