@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { addUser } from "../actions/user";
+import { createPost, searchTags, getAllPosts } from "../actions/post";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,14 +18,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Form = ({ addUser }) => {
-  const [input, setInput] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    age: Number
-  });
+const Form = ({ createPost, getAllPosts, searchTags }) => {
+  const initInputState = {
+    postTitle: "",
+    postContent: "",
+    postTags: [],
+    search: ""
+  };
+  const [input, setInput] = useState(initInputState);
 
   // Style
   const classes = useStyles();
@@ -34,9 +34,18 @@ const Form = ({ addUser }) => {
   const onChange = e => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+  const onSearch = e => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+    const tagString = input.search;
+    searchTags(tagString);
+    if (e.target.value === "" || null) {
+      getAllPosts();
+    }
+  };
   const onSubmit = e => {
     e.preventDefault();
-    addUser(input);
+    createPost(input);
+    setInput(initInputState);
   };
 
   return (
@@ -50,53 +59,41 @@ const Form = ({ addUser }) => {
         <div>
           <TextField
             required
-            id="standard-required"
-            label="First Name"
-            defaultValue=""
+            id="filled-required"
+            label="Headline"
+            variant="filled"
             onChange={onChange}
-            name="firstName"
+            name="postTitle"
+            value={input.postTitle}
           />
           <TextField
-            required
-            id="standard-required"
-            label="Last Name"
-            defaultValue=""
+            id="filled-textarea"
+            label="Today I Worked On..."
+            multiline
             onChange={onChange}
-            name="required"
-            name="lastName"
+            name="postContent"
+            required={true}
+            value={input.postContent}
           />
           <TextField
-            required
-            id="standard-required"
-            label="Email"
-            defaultValue=""
+            id="standard-basic"
+            label="Tags"
             onChange={onChange}
-            name="required"
-            name="email"
-          />
-          <TextField
-            required
-            id="standard-helperText"
-            label="Phone Number"
-            defaultValue=""
-            onChange={onChange}
-            helperText="(123)456-7890"
-            name="required"
-            name="phone"
-          />
-          <TextField
-            id="standard-number"
-            label="Age"
-            type="number"
-            onChange={onChange}
-            InputLabelProps={{
-              shrink: true
-            }}
-            name="age"
+            name="postTags"
+            value={input.postTags}
           />
           <Button onClick={onSubmit} variant="contained" color="primary">
-            Submit
+            Create Post
           </Button>
+          <TextField
+            id="filled-search"
+            label="Search by tags"
+            type="search"
+            name="search"
+            variant="filled"
+            onChange={onSearch}
+            value={input.search}
+          />
         </div>
       </form>
     </div>
@@ -104,7 +101,9 @@ const Form = ({ addUser }) => {
 };
 
 Form.propTypes = {
-  addUser: PropTypes.func.isRequired
+  createPost: PropTypes.func.isRequired,
+  getAllPosts: PropTypes.func.isRequired,
+  searchTags: PropTypes.func.isRequired
 };
 
-export default connect(null, { addUser })(Form);
+export default connect(null, { createPost, getAllPosts, searchTags })(Form);

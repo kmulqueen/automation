@@ -1,3 +1,4 @@
-export const ADD_USER = "ADD_USER";
-export const GET_ALL_USERS = "GET_ALL_USERS";
-export const DELETE_USER = "DELETE_USER";
+export const CREATE_POST = "CREATE_POST";
+export const GET_ALL_POSTS = "GET_ALL_POSTS";
+export const DELETE_POST = "DELETE_POST";
+export const SEARCH_TAGS = "SEARCH_TAGS";

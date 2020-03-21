@@ -1,8 +1,13 @@
-import { ADD_USER, GET_ALL_USERS, DELETE_USER } from "../actions/types";
+import {
+  CREATE_POST,
+  GET_ALL_POSTS,
+  DELETE_POST,
+  SEARCH_TAGS
+} from "../actions/types";
 
 const initialState = {
-  user: null,
-  users: [],
+  post: null,
+  posts: [],
   loading: true,
   error: {}
 };
@@ -11,23 +16,24 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case ADD_USER:
+    case CREATE_POST:
       return {
         ...state,
-        user: payload,
-        users: [...state.users, payload],
+        post: payload,
+        posts: [...state.posts, payload],
         loading: false
       };
-    case GET_ALL_USERS:
+    case GET_ALL_POSTS:
+    case SEARCH_TAGS:
       return {
         ...state,
-        users: payload,
+        posts: payload,
         loading: false
       };
-    case DELETE_USER:
+    case DELETE_POST:
       return {
         ...state,
-        users: state.users.filter(user => user._id != payload),
+        posts: state.posts.filter(post => post._id != payload),
         loading: false
       };
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getAllUsers } from "../actions/user";
+import { getAllPosts } from "../actions/post";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -11,10 +11,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-const SimpleTable = ({ getAllUsers, user: { users } }) => {
+const SimpleTable = ({ getAllPosts, post: { posts } }) => {
   useEffect(() => {
-    getAllUsers();
-  }, [getAllUsers]);
+    getAllPosts();
+  }, [getAllPosts]);
 
   const useStyles = makeStyles({
     table: {
@@ -29,21 +29,21 @@ const SimpleTable = ({ getAllUsers, user: { users } }) => {
       <Table className={classes.table} aria-label="table">
         <TableHead>
           <TableRow>
-            <TableCell>First Name</TableCell>
-            <TableCell>Last name</TableCell>
-            <TableCell>Age</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Phone</TableCell>
+            <TableCell>Post Title</TableCell>
+            <TableCell>Post Content</TableCell>
+            <TableCell>Post Tags</TableCell>
+            <TableCell>Post Likes</TableCell>
+            <TableCell>Post Comments</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map(user => (
-            <TableRow key={user.email}>
-              <TableCell scope="row">{user.firstName}</TableCell>
-              <TableCell>{user.lastName}</TableCell>
-              <TableCell>{user.age}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.phone}</TableCell>
+          {posts.map((post, i) => (
+            <TableRow key={i}>
+              <TableCell scope="row">{post.postTitle}</TableCell>
+              <TableCell>{post.postContent}</TableCell>
+              <TableCell>{post.postTags.map(tag => `${tag} `)}</TableCell>
+              <TableCell>{post.postLikes.length}</TableCell>
+              <TableCell>{post.postComments}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -53,13 +53,13 @@ const SimpleTable = ({ getAllUsers, user: { users } }) => {
 };
 
 SimpleTable.propTypes = {
-  getAllUsers: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  getAllPosts: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  users: state.users,
-  user: state.user
+  posts: state.posts,
+  post: state.post
 });
 
-export default connect(mapStateToProps, { getAllUsers })(SimpleTable);
+export default connect(mapStateToProps, { getAllPosts })(SimpleTable);

@@ -4,14 +4,14 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 // Components
-import SimpleTable from "./components/Table";
 import Form from "./components/Form";
+import Posts from "./components/Posts";
 
 function App() {
   return (
     <Provider store={store}>
       <Form />
-      <SimpleTable />
+      <Posts />
     </Provider>
   );
 }
